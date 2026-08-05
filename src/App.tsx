@@ -388,6 +388,20 @@ function App() {
         <div className="mx-auto w-full max-w-3xl p-3">
           <SearchBar placeholder=" Search pins, streets, deals..." />
         </div>
+        <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 p-3 border-t-2 pt-4 border-gray-300 sm:gap-4 sm:p-5 lg:max-w-5xl">
+          <h1 className="font-medium px-1">Around the street</h1>
+          {civicData.map((post) => (
+            <NewsCard
+              key={post[0]}
+              claim={post[3]}
+              metaOne={formatRelativeTime(post[13])}
+              metaTwo={post[1]}
+              metaThree={formatCivicStatusLabel(post[12], post[22])}
+              upvoteCount={post[18] ?? 0}
+              onUpvoteClick={() => console.log("upvote:", post[0])}
+            />
+          ))}
+        </div>
         <div className="mx-auto w-full max-w-3xl p-3 lg:max-w-5xl">
           <Map />
         </div>
@@ -435,20 +449,6 @@ function App() {
               secondaryLabel="It's fixed"
               onPrimaryClick={() => console.log(post[0], "Still there")}
               onSecondaryClick={() => console.log(post[0], "It's fixed")}
-            />
-          ))}
-        </div>
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 p-3 border-t-2 pt-4 border-gray-300 sm:gap-4 sm:p-5 lg:max-w-5xl">
-          <h1 className="font-medium px-1">Around the street</h1>
-          {civicData.map((post) => (
-            <NewsCard
-              key={post[0]}
-              claim={post[3]}
-              metaOne={formatRelativeTime(post[13])}
-              metaTwo={post[1]}
-              metaThree={formatCivicStatusLabel(post[12], post[22])}
-              upvoteCount={post[18] ?? 0}
-              onUpvoteClick={() => console.log("upvote:", post[0])}
             />
           ))}
         </div>

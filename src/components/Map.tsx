@@ -21,7 +21,7 @@ const Map = ({
       zoom={zoom}
       scrollWheelZoom={true}
       zoomControl={false}
-      className={twMerge('h-64 w-full overflow-hidden rounded-2xl sm:h-80 md:h-96', className)}
+      className={twMerge('isolate z-0 h-64 w-full overflow-hidden rounded-2xl sm:h-80 md:h-96', className)}
     >
       <TileLayer
         attribution=''
