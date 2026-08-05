@@ -1,0 +1,335 @@
+
+// CivicRow index map: [0]id [1]category [2]subcategory [3]title [4]description [5]photoUrl [6]latitude [7]longitude [8]street [9]ward [10]authorityReference [11]statutoryWindowDays [12]status [13]createdAt [14]updatedAt [15]closedAt [16]reporterName [17]reporterRole [18]verificationFor [19]verificationAgainst [20]distance [21]daysElapsed [22]breachDays
+
+export const civicData = [
+  [
+    "post_001",
+    "Civic",
+    "Pothole",
+    "Pothole on Waroda Road",
+    "Large pothole causing traffic and water accumulation after rain.",
+    "https://images.squarespace-cdn.com/content/v1/573365789f726693272dc91a/1704992146415-CI272VYXPALWT52IGLUB/AdobeStock_201419293.jpeg?format=1500w",
+    19.0595,
+    72.8294,
+    "Waroda Road",
+    "H West",
+    "BMC4471",
+    7,
+    "Live",
+    "2026-06-22 09:15",
+    "2026-07-26 11:20",
+    null,
+    "Anjali D",
+    "Resident • verified number",
+    6,
+    1,
+    "400 m",
+    34,
+    27
+  ],
+  [
+    "post_002",
+    "Civic",
+    "Streetlight",
+    "Streetlight outside Carter Road park is dark",
+    "Streetlight has been non-functional for three nights.",
+    null,
+    19.0612,
+    72.8258,
+    "Carter Road",
+    "H West",
+    "BMC4488",
+    7,
+    "Reported",
+    "2026-08-01 20:10",
+    "2026-08-01 20:10",
+    null,
+    "Sameer K",
+    "Resident • new report",
+    0,
+    0,
+    "150 m",
+    2,
+    null
+  ],
+  [
+    "post_003",
+    "Civic",
+    "Pothole",
+    "Perry Cross Road pothole repaired",
+    "Pothole reported three weeks ago was patched by a BMC crew.",
+    "https://5.imimg.com/data5/SELLER/Default/2021/10/YX/JF/JF/121603188/instant-pothole-repair-500x500.jpg",
+    19.0601,
+    72.8288,
+    "Perry Cross Road",
+    "H West",
+    "BMC4471",
+    7,
+    "Resolved",
+    "2026-07-10 08:00",
+    "2026-07-15 09:30",
+    "2026-07-15 09:30",
+    "Aditya N",
+    "Push The Pin • system feed",
+    5,
+    0,
+    "600 m",
+    5,
+    null
+  ]
+];
+
+
+// AskRow index map: [0]id [1]category [2]needType [3]urgency [4]deadline [5]contactMethod [6]title [7]description [8]street [9]ward [10]entryState [11]unitsNeeded [12]responders [13]fulfilled [14]timeRemaining [15]latitude [16]longitude [17]createdAt [18]createdBy [19]status
+
+export const askData = [
+  [
+    "ask_001",
+    "Ask",
+    "Blood",
+    "Now",
+    "2026-08-03 16:00",
+    "WhatsApp",
+    "B+ Blood Needed Near Lilavati Hospital",
+    "Need two units of B+ blood urgently for surgery. Donors requested to contact immediately.",
+    "Bandstand Road",
+    "H West",
+    "Open",
+    2,
+    1,
+    "No",
+    "3h 15m",
+    19.0508,
+    72.8210,
+    "2026-08-03 12:45",
+    "Rahul S",
+    "Open"
+  ]
+];
+
+// ListingRow index map: [0]id [1]category [2]itemName [3]price [4]priceType [5]condition [6]photos [7]pickupTerms [8]title [9]description [10]street [11]ward [12]sellerName [13]sellerTrustTier [14]status [15]createdAt [16]updatedAt [17]daysListed [18]watchers [19]soldPrice [20]latitude [21]longitude
+
+export const listingData = [
+  [
+    "listing_001",
+    "Listing",
+    "Office Chair",
+    3500,
+    "Negotiable",
+    "Good",
+    "chair1.jpg,chair2.jpg",
+    "Pickup Only",
+    "Office Chair for Sale",
+    "Ergonomic office chair in good condition with adjustable height.",
+    "Hill Road",
+    "H West",
+    "Amit R",
+    "Verified Resident",
+    "Live",
+    "2026-08-01 10:30",
+    "2026-08-03 09:15",
+    2,
+    18,
+    null,
+    19.0592,
+    72.8296
+  ]
+];
+
+// EventRow index map: [0]id [1]category [2]venue [3]title [4]photoUrl [5]startsAt [6]endsAt [7]recurrence [8]price [9]capacity [10]street [11]landmark [12]organiser [13]status [14]createdAt [15]timeToStart [16]seatsLeft [17]goingCount [18]latitude [19]longitude
+
+export const eventData = [
+  [
+    "event_001",
+    "Event",
+    "Bonobo",
+    "Live Jazz at Bonobo",
+    "https://theideaslab.com/wp-content/uploads/2023/12/8-1.jpg",
+    "2026-08-07 21:00",
+    "2026-08-07 23:30",
+    "Weekly Friday",
+    500,
+    120,
+    "Linking Road",
+    "Opp. KFC",
+    "Bonobo Mumbai",
+    "Upcoming",
+    "2026-08-01 12:00",
+    "4 Days",
+    42,
+    78,
+    19.0658,
+    72.8335
+  ],
+  [
+    "event_002",
+    "Event",
+    "Ranwar Cross",
+    "Sunday Sketch Walk at Ranwar Cross",
+    null,
+    "2026-08-09 07:30",
+    "2026-08-09 09:30",
+    "Weekly Sunday",
+    null,
+    null,
+    "Ranwar Cross Lane",
+    "Near the chapel",
+    "Bandra Collective",
+    "Upcoming",
+    "2026-08-02 10:00",
+    "6 Days",
+    null,
+    9,
+    19.0605,
+    72.8302
+  ],
+  [
+    "event_003",
+    "Event",
+    "Turner Road",
+    "Farmers Market at Turner Road",
+    null,
+    "2026-08-10 10:00",
+    "2026-08-10 14:00",
+    null,
+    null,
+    null,
+    "Turner Road",
+    "Opp. St. Peter's Church",
+    "Turner Road Traders",
+    "Upcoming",
+    "2026-08-03 09:00",
+    null,
+    null,
+    null,
+    19.0587,
+    72.8318
+  ]
+];
+
+// DealRow index map: [0]id [1]category [2]offerText [3]photoUrl [4]validFrom [5]validUntil [6]validDays [7]validHours [8]redemptionType [9]claimCap [10]businessName [11]street [12]landmark [13]paidPlacement [14]nextOccurrence [15]status [16]createdAt [17]updatedAt [18]timeToExpiry [19]claimsUsed [20]capReached [21]latitude [22]longitude
+
+export const dealData = [
+  [
+    "deal_001",
+    "Deal",
+    "Buy 1 Get 1 Free Coffee",
+    "https://dineout-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/DINEOUT_ALL_RESTAURANTS/IMAGES/RESTAURANT_IMAGE_SERVICE/2024/4/9/43ac3cdf-098b-4c84-a839-1f83700994ab_20240409T113055243.jpg",
+    "2026-08-01",
+    "2026-08-15",
+    "Mon–Fri",
+    "10:00 AM–6:00 PM",
+    "Show QR Code",
+    100,
+    "Blue Tokai Coffee",
+    "Hill Road",
+    "Opp. St. Andrew's Church",
+    "Yes",
+    "2026-08-04 10:00",
+    "Live",
+    "2026-08-01 09:00",
+    "2026-08-03 11:30",
+    "12 Days",
+    38,
+    "No",
+    19.0594,
+    72.8297
+  ],
+  [
+    "deal_002",
+    "Deal",
+    "20% Off Haircuts",
+    "https://content.jdmagicbox.com/comp/udumalpet/v9/9999p4252.4252.230829135004.w5v9/catalogue/green-trends-unisex-hair-and-style-salon-udamalpet-bazaar-udumalpet-beauty-parlours-ivopniamus.jpg",
+    "2026-08-01",
+    "2026-08-31",
+    "Weekends",
+    "9:00 AM–8:00 PM",
+    "Walk In",
+    null,
+    "Green Trends Salon",
+    "Waroda Road",
+    "Next to the bakery",
+    "No",
+    "2026-08-09 09:00",
+    "Live",
+    "2026-07-28 10:00",
+    "2026-08-02 15:00",
+    "5 Days",
+    12,
+    "No",
+    19.0599,
+    72.8281
+  ],
+  [
+    "deal_003",
+    "Deal",
+    "Free Dessert with Any Main Course",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4Wpab8JUYjYvnGVsaqixiAvCK0GboQvb9AjPJ29wicrdzkAz5ROYUAxkR&s=10",
+    "2026-07-01",
+    "2026-12-31",
+    null,
+    null,
+    "Show Screen",
+    50,
+    "Salt Water Cafe",
+    "Carter Road",
+    "Opp. Bandra Fort",
+    "Yes",
+    "2026-08-04 12:00",
+    "Live",
+    "2026-07-01 09:00",
+    "2026-08-04 08:00",
+    null,
+    50,
+    "Yes",
+    19.0421,
+    72.8202
+  ]
+];
+
+// PlaceRow index map: [0]id [1]category [2]placeName [3]placeType [4]openingHours [5]street [6]landmark [7]openingDate [8]closingDate [9]ownerVerified [10]openNow [11]daysToOpening [12]interestCount [13]latitude [14]longitude [15]createdAt [16]updatedAt [17]status
+
+export const placeData = [
+  [
+    "place_001",
+    "Place",
+    "Blue Tokai Coffee",
+    "Café",
+    "Mon–Sun 8:00 AM–10:00 PM",
+    "Hill Road",
+    "Opp. St. Andrew's Church",
+    "2025-05-01",
+    null,
+    "Yes",
+    "Yes",
+    0,
+    156,
+    19.0594,
+    72.8297,
+    "2025-05-01 08:00",
+    "2026-08-03 10:15",
+    "Active"
+  ]
+];
+
+// MomentRow index map: [0]id [1]category [2]photoUrl [3]caption [4]street [5]ward [6]status [7]createdAt [8]updatedAt [9]age [10]fadesAt [11]timeToFade [12]latitude [13]longitude
+
+export const momentData = [
+  [
+    "moment_001",
+    "Moment",
+    "https://example.com/moments/sunset-bandstand.jpg",
+    "Beautiful sunset at Bandstand today",
+    "Bandstand Promenade",
+    "H West",
+    "Live",
+    "2026-08-03 17:30",
+    "2026-08-03 17:30",
+    "2 Hours",
+    "2026-08-05 17:30",
+    "46 Hours",
+    19.0468,
+    72.8194
+  ]
+];
+
