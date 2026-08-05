@@ -81,25 +81,7 @@ function formatGoingLabel(goingCount: number | null): string | undefined {
 // FeedRow index map: [0]id [1]authorInitial [2]authorName [3]authorRole [4]cardState [5]statusLabel
 // [6]claim [7]categoryType [8]categoryValue [9]categoryDetail [10]metaOne [11]metaTwo [12]metaThree
 // [13]showActions [14]imageUrl [15]primaryLabel [16]secondaryLabel
-type FeedRow = [
-  string,
-  string,
-  string,
-  string,
-  CardState,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string | null,
-  string | null,
-  string | null,
-  boolean,
-  string | null,
-  string | undefined,
-  string | undefined,
-];
+// np
 
 // CivicRow index map (matches utils/stub.tsx civicData):
 // [0]id [1]category [2]subcategory [3]title [4]description [5]photoUrl [6]latitude [7]longitude
