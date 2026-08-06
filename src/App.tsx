@@ -270,6 +270,46 @@ type ListingRow = [
 
 const listingData = listingStubData as unknown as ListingRow[];
 
+interface ActivityItem {
+  key: string;
+  actionLabel: string;
+  category: string;
+  location: string;
+  distance?: string | null;
+  createdAt: string;
+}
+
+const recentActivities: ActivityItem[] = [
+  ...civicData.map((post) => ({
+    key: post[0],
+    actionLabel: "Pin raised",
+    category: post[2],
+    location: post[8],
+    distance: post[20],
+    createdAt: post[13],
+  })),
+  ...listingData.map((listing) => ({
+    key: listing[0],
+    actionLabel: "Item listed",
+    category: listing[2],
+    location: listing[10],
+    createdAt: listing[15],
+  })),
+  ...dealData.map((deal) => ({
+    key: deal[0],
+    actionLabel: "Deal live",
+    category: deal[2],
+    location: deal[11],
+    createdAt: deal[16],
+  })),
+]
+  .sort(
+    (a, b) =>
+      new Date(b.createdAt.replace(" ", "T")).getTime() -
+      new Date(a.createdAt.replace(" ", "T")).getTime(),
+  )
+  .slice(0, 3);
+
 /*
 const feedData: FeedRow[] = [
   [
@@ -423,25 +463,16 @@ function App() {
         </div>
         <div className="mx-auto flex w-full max-w-3xl flex-col p-3 border-t pt-4 border-gray-300 sm:p-5 lg:max-w-5xl">
           <h1 className="mb-2 px-1 font-medium">Watch · Activity nearby</h1>
-          <Activity
-            actionLabel="Pin raised"
-            category={civicData[0][2]}
-            location={civicData[0][8]}
-            distance={civicData[0][20]}
-            timeAgo={formatRelativeTime(civicData[0][13])}
-          />
-          <Activity
-            actionLabel="Item listed"
-            category={listingData[0][2]}
-            location={listingData[0][10]}
-            timeAgo={formatRelativeTime(listingData[0][15])}
-          />
-          <Activity
-            actionLabel="Deal live"
-            category={dealData[0][2]}
-            location={dealData[0][11]}
-            timeAgo={formatRelativeTime(dealData[0][16])}
-          />
+          {recentActivities.map((activity) => (
+            <Activity
+              key={activity.key}
+              actionLabel={activity.actionLabel}
+              category={activity.category}
+              location={activity.location}
+              distance={activity.distance}
+              timeAgo={formatRelativeTime(activity.createdAt)}
+            />
+          ))}
         </div>
         <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 p-3 border-t pt-4 border-gray-300 sm:gap-4 sm:p-5 lg:max-w-5xl">
           <h1 className="font-medium px-1">Around the street</h1>
