@@ -8,6 +8,12 @@ interface DealCardProps extends React.HTMLAttributes<HTMLDivElement> {
   metaOne?: string | null
   metaTwo?: string | null
   metaThree?: string | null
+  layout?: 'vertical' | 'horizontal'
+}
+
+const layoutClasses: Record<'vertical' | 'horizontal', string> = {
+  vertical: 'w-full flex-col',
+  horizontal: 'h-48 w-52 min-w-52 shrink-0 snap-start flex-col sm:h-56 sm:w-60',
 }
 
 const DealCard = ({
@@ -17,23 +23,37 @@ const DealCard = ({
   metaOne,
   metaTwo,
   metaThree,
+  layout = 'vertical',
   className = '',
   ...props
 }: DealCardProps) => {
   return (
     <div
-      className={twMerge('w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm', className)}
+      className={twMerge(
+        'flex overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm',
+        layoutClasses[layout],
+        className
+      )}
       {...props}
     >
-      {imageUrl && <img src={imageUrl} alt="" className="aspect-452/232 w-full object-cover" />}
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt=""
+          className={twMerge(
+            'w-full shrink-0 object-cover',
+            layout === 'horizontal' ? 'h-24 sm:h-28' : 'aspect-452/232'
+          )}
+        />
+      )}
 
-      <div className="flex flex-col gap-1.5 p-4 sm:gap-2 sm:p-5">
-        <h3 className="line-clamp-2 text-base font-semibold leading-snug text-gray-900 sm:text-lg">
+      <div className="flex flex-1 min-h-0 flex-col justify-between gap-1 p-2.5 sm:gap-1.5 sm:p-3">
+        <h3 className="line-clamp-2 text-xs font-semibold leading-snug text-gray-900 sm:text-sm">
           {[offerText, businessName].filter(Boolean).join(' · ')}
         </h3>
 
         {(metaOne || metaTwo || metaThree) && (
-          <p className="truncate text-xs text-gray-400 sm:text-sm">
+          <p className="line-clamp-2 text-[10px] text-gray-400 sm:text-xs">
             {[metaOne, metaTwo, metaThree].filter(Boolean).join(' · ')}
           </p>
         )}

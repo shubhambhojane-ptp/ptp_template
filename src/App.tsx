@@ -8,6 +8,7 @@ import EventCard from "./components/EventCard";
 import NewsCard from "./components/NewsCard";
 import PollCard from "./components/PollCard";
 import DealCard from "./components/DealCard";
+import Activity from "./components/Activity";
 import BottomTab, { type BottomTabKey } from "./components/BottomTab";
 import alertIcon from "./assets/alert.svg";
 import coneIcon from "./assets/cone.svg";
@@ -16,6 +17,7 @@ import {
   eventData as eventStubData,
   civicData as civicStubData,
   dealData as dealStubData,
+  listingData as listingStubData,
 } from "../utils/stub";
 
 const categoryIconByType: Record<string, string> = {
@@ -237,6 +239,37 @@ function formatExpiryLabel(timeToExpiry: string | null): string | undefined {
   return timeToExpiry ? `${timeToExpiry} left` : undefined;
 }
 
+// ListingRow index map (matches utils/stub.tsx listingData):
+// [0]id [1]category [2]itemName [3]price [4]priceType [5]condition [6]photos [7]pickupTerms
+// [8]title [9]description [10]street [11]ward [12]sellerName [13]sellerTrustTier [14]status
+// [15]createdAt [16]updatedAt [17]daysListed [18]watchers [19]soldPrice [20]latitude [21]longitude
+type ListingRow = [
+  string,
+  string,
+  string,
+  number,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  number,
+  number,
+  number | null,
+  number,
+  number,
+];
+
+const listingData = listingStubData as unknown as ListingRow[];
+
 /*
 const feedData: FeedRow[] = [
   [
@@ -388,9 +421,31 @@ function App() {
         <div className="mx-auto w-full max-w-3xl p-3">
           <SearchBar placeholder=" Search pins, streets, deals..." />
         </div>
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 p-3 border-t-2 pt-4 border-gray-300 sm:gap-4 sm:p-5 lg:max-w-5xl">
+        <div className="mx-auto flex w-full max-w-3xl flex-col p-3 border-t pt-4 border-gray-300 sm:p-5 lg:max-w-5xl">
+          <h1 className="mb-2 px-1 font-medium">Watch · Activity nearby</h1>
+          <Activity
+            actionLabel="Pin raised"
+            category={civicData[0][2]}
+            location={civicData[0][8]}
+            distance={civicData[0][20]}
+            timeAgo={formatRelativeTime(civicData[0][13])}
+          />
+          <Activity
+            actionLabel="Item listed"
+            category={listingData[0][2]}
+            location={listingData[0][10]}
+            timeAgo={formatRelativeTime(listingData[0][15])}
+          />
+          <Activity
+            actionLabel="Deal live"
+            category={dealData[0][2]}
+            location={dealData[0][11]}
+            timeAgo={formatRelativeTime(dealData[0][16])}
+          />
+        </div>
+        <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 p-3 border-t pt-4 border-gray-300 sm:gap-4 sm:p-5 lg:max-w-5xl">
           <h1 className="font-medium px-1">Around the street</h1>
-          {civicData.map((post) => (
+          {civicData.slice(3,7).map((post) => (
             <NewsCard
               key={post[0]}
               claim={post[3]}
@@ -405,7 +460,7 @@ function App() {
         <div className="mx-auto w-full max-w-3xl p-3 lg:max-w-5xl">
           <Map />
         </div>
-        <div className="mx-auto px-4 w-full max-w-3xl py-3  border-t-2 border-gray-300 pt-4 lg:max-w-5xl">
+        <div className="mx-auto px-4 w-full max-w-3xl py-3  border-t border-gray-300 pt-4 lg:max-w-5xl">
           <div className="flex justify-between mb-2">
             <h1 className="font-medium">Events</h1>
             <p className="text-gray-400">browse</p>
@@ -425,9 +480,9 @@ function App() {
             ))}
           </div>
         </div>
-        <div className="mx-auto grid w-full max-w-3xl grid-cols-1 items-start gap-4 p-3 border-t-2 border-gray-300 pt-4 sm:grid-cols-2 sm:gap-5 sm:p-5 lg:max-w-5xl md:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid w-full max-w-3xl grid-cols-1 items-start gap-4 p-3 border-t border-gray-300 pt-4 sm:grid-cols-2 sm:gap-5 sm:p-5 lg:max-w-5xl md:grid-cols-2 lg:grid-cols-3">
           <h1 className="col-span-full font-medium ">Around You</h1>
-          {civicData.map((post) => (
+          {civicData.slice(0,5).map((post) => (
             <Card
               key={post[0]}
               authorInitial={getCivicAuthorInitial(post[16])}
@@ -452,9 +507,9 @@ function App() {
             />
           ))}
         </div>
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 p-3 border-t-2 pt-4 border-gray-300 sm:gap-4 sm:p-5 lg:max-w-5xl">
+        <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 p-3 border-t pt-4 border-gray-300 sm:gap-4 sm:p-5 lg:max-w-5xl">
           <h1 className="text-gray-400">TAP TO WEIGH IN · NEARBY</h1>
-          {civicData.map((post) => {
+          {civicData.slice(0, 3).map((post) => {
             const { yesLabel, noLabel, totalVotes } = getCivicVoteLabels(
               post[18],
               post[19],
@@ -479,11 +534,12 @@ function App() {
             );
           })}
         </div>
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 p-3 pb-24 border-t-2 pt-4 border-gray-300 sm:gap-4 sm:p-5 sm:pb-28 lg:max-w-5xl">
+        <div className="mx-auto w-full max-w-3xl px-4 py-3 pb-24 border-t pt-4 border-gray-300 sm:pb-28 lg:max-w-5xl">
           <div className="flex justify-between mb-2">
-            <h1 className="font-medium">Deals nearby</h1>
+            <h1 className="font-medium">Deals nearby (horizontal example)</h1>
             <p className="text-gray-400">browse {`>`} </p>
           </div>
+          <div className="scrollbar-none flex snap-x snap-mandatory items-start gap-3 overflow-x-auto px-3 pb-1 sm:gap-4 sm:px-5">
             {dealData.map((deal) => (
               <DealCard
                 key={deal[0]}
@@ -493,8 +549,27 @@ function App() {
                 metaOne={deal[6]}
                 metaTwo={deal[7]}
                 metaThree={formatExpiryLabel(deal[18])}
+                layout="horizontal"
               />
             ))}
+          </div>
+
+          <div className="mt-4 flex justify-between mb-2">
+            <h1 className="font-medium">Deals nearby (vertical example)</h1>
+            <p className="text-gray-400">browse {`>`} </p>
+          </div>
+          <div className="flex flex-col gap-3 px-3 sm:gap-4 sm:px-5">
+            <DealCard
+              key={dealData[0][0]}
+              imageUrl={dealData[0][3] ?? undefined}
+              offerText={dealData[0][2]}
+              businessName={dealData[0][10]}
+              metaOne={dealData[0][6]}
+              metaTwo={dealData[0][7]}
+              metaThree={formatExpiryLabel(dealData[0][18])}
+              layout="vertical"
+            />
+          </div>
         </div>
       </div>
       <BottomTab
