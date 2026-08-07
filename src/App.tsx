@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router";
 import Home from "./pages/Home";
 import DealsPage from "./pages/DealsPage";
 import EventsPage from "./pages/EventsPage";
+import ListingsPage from "./pages/ListingsPage";
 import BottomTab, { type BottomTabKey } from "./components/BottomTab";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/deals" element={<DealsPage />} />
         <Route path="/events" element={<EventsPage />} />
+        <Route path="/listings" element={<ListingsPage />} />
       </Routes>
       <BottomTab
         active={activeTab}

@@ -8,6 +8,7 @@ import EventCard from "../components/EventCard";
 import NewsCard from "../components/NewsCard";
 import PollCard from "../components/PollCard";
 import DealCard from "../components/DealCard";
+import ListingCard from "../components/ListingCard";
 import Activity from "../components/Activity";
 import alertIcon from "../assets/alert.svg";
 import coneIcon from "../assets/cone.svg";
@@ -20,9 +21,11 @@ import {
   formatGoingLabel,
 } from "../../utils/events";
 import {
-  civicData as civicStubData,
-  listingData as listingStubData,
-} from "../../utils/stub";
+  listingData,
+  formatListingPriceLabel,
+  formatWatchersLabel,
+} from "../../utils/listings";
+import { civicData as civicStubData } from "../../utils/stub";
 
 const categoryIconByType: Record<string, string> = {
   civic: coneIcon,
@@ -67,37 +70,6 @@ type CivicRow = [
 ];
 
 const civicData = civicStubData as unknown as CivicRow[];
-
-// ListingRow index map (matches utils/stub.tsx listingData):
-// [0]id [1]category [2]itemName [3]price [4]priceType [5]condition [6]photos [7]pickupTerms
-// [8]title [9]description [10]street [11]ward [12]sellerName [13]sellerTrustTier [14]status
-// [15]createdAt [16]updatedAt [17]daysListed [18]watchers [19]soldPrice [20]latitude [21]longitude
-type ListingRow = [
-  string,
-  string,
-  string,
-  number,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  string,
-  number,
-  number,
-  number | null,
-  number,
-  number,
-];
-
-const listingData = listingStubData as unknown as ListingRow[];
 
 function formatRelativeTime(dateStr: string): string | undefined {
   const date = new Date(dateStr.replace(" ", "T"));
@@ -339,9 +311,9 @@ function Home() {
           );
         })}
       </div>
-      <div className="mx-auto w-full max-w-3xl px-4 py-3 pb-24 border-t pt-4 border-gray-300 sm:pb-28 lg:max-w-5xl">
+      <div className="mx-auto w-full max-w-3xl px-4 py-3 border-t pt-4 border-gray-300 lg:max-w-5xl">
         <div className="flex justify-between mb-2">
-          <h1 className="font-medium">Deals nearby (horizontal example)</h1>
+          <h1 className="font-medium">Deals nearby </h1>
           <Link to="/deals" className="text-gray-400 hover:text-gray-600">
             browse {`>`}
           </Link>
@@ -356,6 +328,28 @@ function Home() {
               metaOne={deal[6]}
               metaTwo={deal[7]}
               metaThree={formatExpiryLabel(deal[18])}
+              layout="horizontal"
+            />
+          ))}
+        </div>
+      </div>
+      <div className="mx-auto w-full max-w-3xl px-4 py-3 pb-24 border-t pt-4 border-gray-300 sm:pb-28 lg:max-w-5xl">
+        <div className="flex justify-between mb-2">
+          <h1 className="font-medium">Listings nearby</h1>
+          <Link to="/listings" className="text-gray-400 hover:text-gray-600">
+            browse {`>`}
+          </Link>
+        </div>
+        <div className="scrollbar-none flex snap-x snap-mandatory items-start gap-3 overflow-x-auto px-3 pb-1 sm:gap-4 sm:px-5">
+          {listingData.slice(0,3).map((listing) => (
+            <ListingCard
+              key={listing[0]}
+              imageUrl={listing[6] ?? undefined}
+              itemName={listing[2]}
+              priceLabel={formatListingPriceLabel(listing[3], listing[4])}
+              metaOne={listing[5]}
+              metaTwo={listing[10]}
+              metaThree={formatWatchersLabel(listing[18])}
               layout="horizontal"
             />
           ))}
