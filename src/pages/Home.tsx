@@ -284,26 +284,6 @@ function Home() {
             />
           ))}
         </div>
-
-        <div className="mt-4 flex justify-between mb-2">
-          <h1 className="font-medium">Events nearby (vertical example)</h1>
-          <Link to="/events" className="text-gray-400 hover:text-gray-600">
-            browse {`>`}
-          </Link>
-        </div>
-        <div className="flex flex-col gap-3 px-3 sm:gap-4 sm:px-5">
-          <EventCard
-            key={eventData[0][0]}
-            imageUrl={eventData[0][4] ?? undefined}
-            timingLabel={eventData[0][15] ?? undefined}
-            title={eventData[0][3]}
-            dateLabel={formatEventDateLabel(eventData[0][5])}
-            metaOne={formatSeatsLabel(eventData[0][16])}
-            metaTwo={formatGoingLabel(eventData[0][17])}
-            onPrimaryClick={() => console.log("interested:", eventData[0][0])}
-            layout="vertical"
-          />
-        </div>
       </div>
       <div className="mx-auto grid w-full max-w-3xl grid-cols-1 items-start gap-4 p-3 border-t border-gray-300 pt-4 sm:grid-cols-2 sm:gap-5 sm:p-5 lg:max-w-5xl md:grid-cols-2 lg:grid-cols-3">
         <h1 className="col-span-full font-medium ">Around You</h1>
@@ -379,25 +359,6 @@ function Home() {
               layout="horizontal"
             />
           ))}
-        </div>
-
-        <div className="mt-4 flex justify-between mb-2">
-          <h1 className="font-medium">Deals nearby (vertical example)</h1>
-          <Link to="/deals" className="text-gray-400 hover:text-gray-600">
-            browse {`>`}
-          </Link>
-        </div>
-        <div className="flex flex-col gap-3 px-3 sm:gap-4 sm:px-5">
-          <DealCard
-            key={dealData[0][0]}
-            imageUrl={dealData[0][3] ?? undefined}
-            offerText={dealData[0][2]}
-            businessName={dealData[0][10]}
-            metaOne={dealData[0][6]}
-            metaTwo={dealData[0][7]}
-            metaThree={formatExpiryLabel(dealData[0][18])}
-            layout="vertical"
-          />
         </div>
       </div>
     </div>
