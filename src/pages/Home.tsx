@@ -14,7 +14,12 @@ import coneIcon from "../assets/cone.svg";
 import calendarIcon from "../assets/calendar.svg";
 import { dealData, formatExpiryLabel } from "../../utils/deals";
 import {
-  eventData as eventStubData,
+  eventData,
+  formatEventDateLabel,
+  formatSeatsLabel,
+  formatGoingLabel,
+} from "../../utils/events";
+import {
   civicData as civicStubData,
   listingData as listingStubData,
 } from "../../utils/stub";
@@ -24,60 +29,6 @@ const categoryIconByType: Record<string, string> = {
   alert: alertIcon,
   event: calendarIcon,
 };
-
-// EventRow index map (matches utils/stub.tsx eventData):
-// [0]id [1]category [2]venue [3]title [4]photoUrl [5]startsAt [6]endsAt [7]recurrence [8]price
-// [9]capacity [10]street [11]landmark [12]organiser [13]status [14]createdAt [15]timeToStart
-// [16]seatsLeft [17]goingCount [18]latitude [19]longitude
-type EventRow = [
-  string,
-  string,
-  string,
-  string,
-  string | null,
-  string,
-  string,
-  string | null,
-  number | null,
-  number | null,
-  string,
-  string | null,
-  string,
-  string,
-  string,
-  string | null,
-  number | null,
-  number | null,
-  number,
-  number,
-];
-
-const eventData = eventStubData as unknown as EventRow[];
-
-function formatEventDateLabel(startsAt: string): string | undefined {
-  const date = new Date(startsAt.replace(" ", "T"));
-  if (Number.isNaN(date.getTime())) return undefined;
-
-  const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
-  let hours = date.getHours();
-  const minutes = date.getMinutes();
-  const meridiem = hours >= 12 ? "pm" : "am";
-  hours = hours % 12 || 12;
-  const time =
-    minutes === 0
-      ? `${hours}${meridiem}`
-      : `${hours}:${String(minutes).padStart(2, "0")}${meridiem}`;
-
-  return `${weekday} ${time}`;
-}
-
-function formatSeatsLabel(seatsLeft: number | null): string | undefined {
-  return seatsLeft != null ? `${seatsLeft} seats left` : undefined;
-}
-
-function formatGoingLabel(goingCount: number | null): string | undefined {
-  return goingCount != null ? `${goingCount} going` : undefined;
-}
 
 // FeedRow index map: [0]id [1]authorInitial [2]authorName [3]authorRole [4]cardState [5]statusLabel
 // [6]claim [7]categoryType [8]categoryValue [9]categoryDetail [10]metaOne [11]metaTwo [12]metaThree
@@ -315,7 +266,9 @@ function Home() {
       <div className="mx-auto px-4 w-full max-w-3xl py-3  border-t border-gray-300 pt-4 lg:max-w-5xl">
         <div className="flex justify-between mb-2">
           <h1 className="font-medium">Events</h1>
-          <p className="text-gray-400">browse</p>
+          <Link to="/events" className="text-gray-400 hover:text-gray-600">
+            browse {`>`}
+          </Link>
         </div>
         <div className="scrollbar-none flex snap-x snap-mandatory items-start gap-3 overflow-x-auto px-3 pb-1 sm:gap-4 sm:px-5">
           {eventData.map((event) => (
@@ -330,6 +283,26 @@ function Home() {
               onPrimaryClick={() => console.log("interested:", event[0])}
             />
           ))}
+        </div>
+
+        <div className="mt-4 flex justify-between mb-2">
+          <h1 className="font-medium">Events nearby (vertical example)</h1>
+          <Link to="/events" className="text-gray-400 hover:text-gray-600">
+            browse {`>`}
+          </Link>
+        </div>
+        <div className="flex flex-col gap-3 px-3 sm:gap-4 sm:px-5">
+          <EventCard
+            key={eventData[0][0]}
+            imageUrl={eventData[0][4] ?? undefined}
+            timingLabel={eventData[0][15] ?? undefined}
+            title={eventData[0][3]}
+            dateLabel={formatEventDateLabel(eventData[0][5])}
+            metaOne={formatSeatsLabel(eventData[0][16])}
+            metaTwo={formatGoingLabel(eventData[0][17])}
+            onPrimaryClick={() => console.log("interested:", eventData[0][0])}
+            layout="vertical"
+          />
         </div>
       </div>
       <div className="mx-auto grid w-full max-w-3xl grid-cols-1 items-start gap-4 p-3 border-t border-gray-300 pt-4 sm:grid-cols-2 sm:gap-5 sm:p-5 lg:max-w-5xl md:grid-cols-2 lg:grid-cols-3">

@@ -12,6 +12,12 @@ interface EventCardProps extends React.HTMLAttributes<HTMLDivElement> {
   metaTwo?: string | null
   primaryLabel?: string
   onPrimaryClick?: React.MouseEventHandler<HTMLButtonElement>
+  layout?: 'vertical' | 'horizontal'
+}
+
+const layoutClasses: Record<'vertical' | 'horizontal', string> = {
+  vertical: 'w-full',
+  horizontal: 'h-40 min-w-80 shrink-0 snap-start sm:w-80 md:h-52 lg:w-96',
 }
 
 const EventCard = ({
@@ -24,27 +30,51 @@ const EventCard = ({
   metaTwo,
   primaryLabel = "I'm interested",
   onPrimaryClick,
+  layout = 'horizontal',
   className = '',
   ...props
 }: EventCardProps) => {
   return (
     <div
       className={twMerge(
-        'flex h-40 min-w-80 shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm md:h-52 sm:w-80 lg:w-96',
+        'flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm',
+        layoutClasses[layout],
         className
       )}
       {...props}
     >
-      <div className="flex flex-1 items-stretch gap-3 sm:gap-4">
+      <div
+        className={twMerge(
+          'flex flex-1 items-stretch gap-3 sm:gap-4',
+          layout === 'vertical' && 'flex-col gap-0'
+        )}
+      >
         {imageUrl ? (
-          <img src={imageUrl} alt="" className="w-20 shrink-0 object-cover sm:w-24" />
+          <img
+            src={imageUrl}
+            alt=""
+            className={twMerge(
+              'shrink-0 object-cover',
+              layout === 'horizontal' ? 'w-20 sm:w-24' : 'h-40 w-full sm:h-48'
+            )}
+          />
         ) : (
-          <div className="flex w-20 shrink-0 items-center justify-center bg-gray-100 sm:w-24">
+          <div
+            className={twMerge(
+              'flex shrink-0 items-center justify-center bg-gray-100',
+              layout === 'horizontal' ? 'w-20 sm:w-24' : 'h-40 w-full sm:h-48'
+            )}
+          >
             <span className="text-[10px] font-medium uppercase tracking-wide text-gray-400">Poster</span>
           </div>
         )}
 
-        <div className="flex min-w-0 flex-1 flex-col justify-between gap-1 py-3 pr-3 sm:gap-1.5 sm:py-4 sm:pr-4">
+        <div
+          className={twMerge(
+            'flex min-w-0 flex-1 flex-col justify-between gap-1 py-3 sm:gap-1.5 sm:py-4',
+            layout === 'horizontal' ? 'pr-3 sm:pr-4' : 'px-3 sm:px-4'
+          )}
+        >
           <p className="truncate text-xs text-gray-500 sm:text-sm">
             {[badgeLabel, timingLabel].filter(Boolean).join(' · ')}
           </p>

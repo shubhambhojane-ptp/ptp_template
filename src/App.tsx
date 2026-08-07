@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router";
 import Home from "./pages/Home";
 import DealsPage from "./pages/DealsPage";
+import EventsPage from "./pages/EventsPage";
 import BottomTab, { type BottomTabKey } from "./components/BottomTab";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/deals" element={<DealsPage />} />
+        <Route path="/events" element={<EventsPage />} />
       </Routes>
       <BottomTab
         active={activeTab}
