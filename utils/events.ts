@@ -34,6 +34,8 @@ export function formatEventDateLabel(startsAt: string): string | undefined {
   if (Number.isNaN(date.getTime())) return undefined;
 
   const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
+  const month = date.toLocaleDateString("en-US", { month: "short" });
+  const day = date.getDate();
   let hours = date.getHours();
   const minutes = date.getMinutes();
   const meridiem = hours >= 12 ? "pm" : "am";
@@ -43,7 +45,7 @@ export function formatEventDateLabel(startsAt: string): string | undefined {
       ? `${hours}${meridiem}`
       : `${hours}:${String(minutes).padStart(2, "0")}${meridiem}`;
 
-  return `${weekday} ${time}`;
+  return `${weekday}, ${month} ${day} · ${time}`;
 }
 
 export function formatSeatsLabel(seatsLeft: number | null): string | undefined {

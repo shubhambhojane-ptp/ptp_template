@@ -54,7 +54,7 @@ const EventCard = ({
             src={imageUrl}
             alt=""
             className={twMerge(
-              'shrink-0 object-cover',
+              'shrink-0 object-fill',
               layout === 'horizontal' ? 'w-20 sm:w-24' : 'h-40 w-full sm:h-48'
             )}
           />

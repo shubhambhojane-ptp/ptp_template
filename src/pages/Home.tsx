@@ -243,7 +243,7 @@ function Home() {
           </Link>
         </div>
         <div className="scrollbar-none flex snap-x snap-mandatory items-start gap-3 overflow-x-auto px-3 pb-1 sm:gap-4 sm:px-5">
-          {eventData.map((event) => (
+          {eventData.slice(0,3).map((event) => (
             <EventCard
               key={event[0]}
               imageUrl={event[4] ?? undefined}
