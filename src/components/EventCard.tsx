@@ -17,7 +17,7 @@ interface EventCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const layoutClasses: Record<'vertical' | 'horizontal', string> = {
   vertical: 'w-full',
-  horizontal: 'h-40 min-w-80 shrink-0 snap-start sm:w-80 md:h-52 lg:w-96',
+  horizontal: 'min-h-40 min-w-80 shrink-0 snap-start sm:w-80 md:min-h-52 lg:w-96',
 }
 
 const EventCard = ({
@@ -71,15 +71,22 @@ const EventCard = ({
 
         <div
           className={twMerge(
-            'flex min-w-0 flex-1 flex-col justify-between gap-1 py-3 sm:gap-1.5 sm:py-4',
-            layout === 'horizontal' ? 'pr-3 sm:pr-4' : 'px-3 sm:px-4'
+            'flex flex-1 flex-col justify-between gap-1 py-3 sm:gap-1.5 sm:py-4',
+            layout === 'horizontal' ? 'w-0 pr-3 sm:pr-4' : 'min-w-0 px-3 sm:px-4'
           )}
         >
           <p className="truncate text-xs text-gray-500 sm:text-sm">
             {[badgeLabel, timingLabel].filter(Boolean).join(' · ')}
           </p>
 
-          <h3 className="line-clamp-2 text-base font-semibold leading-snug text-gray-900 sm:text-lg">{title}</h3>
+          <h3
+            className={twMerge(
+              'line-clamp-2 font-semibold leading-snug text-gray-900',
+              layout === 'horizontal' ? 'text-xs sm:text-sm' : 'text-base sm:text-lg'
+            )}
+          >
+            {title}
+          </h3>
 
           {(dateLabel || metaOne || metaTwo) && (
             <p className="truncate text-xs text-gray-400 sm:text-sm">
