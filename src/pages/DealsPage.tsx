@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import Navbar from "../components/Navbar";
-import DealCard from "../components/DealCard";
-import { dealData, formatExpiryLabel } from "../../utils/deals";
+import DealList from "../components/DealList";
+import { dealData } from "../../utils/deals";
 
 function DealsPage() {
   return (
@@ -12,20 +12,7 @@ function DealsPage() {
           {`<`} back
         </Link>
         <h1 className="mt-2 mb-4 font-medium">Deals nearby</h1>
-        <div className="flex flex-col gap-3 sm:gap-4">
-          {dealData.map((deal) => (
-            <DealCard
-              key={deal[0]}
-              imageUrl={deal[3] ?? undefined}
-              offerText={deal[2]}
-              businessName={deal[10]}
-              metaOne={deal[6]}
-              metaTwo={deal[7]}
-              metaThree={formatExpiryLabel(deal[18])}
-              layout="vertical"
-            />
-          ))}
-        </div>
+        <DealList deals={dealData} />
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
-import { Link } from "react-router";
+import { useState, type FormEvent } from "react";
+import { Link, useNavigate } from "react-router";
 import Navbar from "../components/Navbar";
 import InfoSection from "../components/InfoSection";
 import SearchBar from "../components/SearchBar";
 import Map from "../components/Map";
-import Card, { type CardState } from "../components/Card";
+import Card from "../components/Card";
 import EventCard from "../components/EventCard";
 import NewsCard from "../components/NewsCard";
 import PollCard from "../components/PollCard";
@@ -25,7 +26,17 @@ import {
   formatListingPriceLabel,
   formatWatchersLabel,
 } from "../../utils/listings";
-import { civicData as civicStubData } from "../../utils/stub";
+import {
+  civicData,
+  formatCivicStatusLabel,
+  getCivicAuthorInitial,
+  getCivicCardState,
+  formatCivicCategoryValue,
+  formatCivicCategoryDetail,
+  formatCivicDistanceLabel,
+  formatCivicDaysOpenLabel,
+  formatCivicConfirmingLabel,
+} from "../../utils/civic";
 
 const categoryIconByType: Record<string, string> = {
   civic: coneIcon,
@@ -37,39 +48,6 @@ const categoryIconByType: Record<string, string> = {
 // [6]claim [7]categoryType [8]categoryValue [9]categoryDetail [10]metaOne [11]metaTwo [12]metaThree
 // [13]showActions [14]imageUrl [15]primaryLabel [16]secondaryLabel
 // np
-
-// CivicRow index map (matches utils/stub.tsx civicData):
-// [0]id [1]category [2]subcategory [3]title [4]description [5]photoUrl [6]latitude [7]longitude
-// [8]street [9]ward [10]authorityReference [11]statutoryWindowDays [12]status [13]createdAt
-// [14]updatedAt [15]closedAt [16]reporterName [17]reporterRole [18]verificationFor
-// [19]verificationAgainst [20]distance [21]daysElapsed [22]breachDays
-type CivicRow = [
-  string,
-  string,
-  string,
-  string,
-  string,
-  string | null,
-  number,
-  number,
-  string,
-  string,
-  string,
-  number,
-  string,
-  string,
-  string,
-  string | null,
-  string,
-  string,
-  number | null,
-  number | null,
-  string | null,
-  number | null,
-  number | null,
-];
-
-const civicData = civicStubData as unknown as CivicRow[];
 
 function formatRelativeTime(dateStr: string): string | undefined {
   const date = new Date(dateStr.replace(" ", "T"));
@@ -86,55 +64,6 @@ function formatRelativeTime(dateStr: string): string | undefined {
   const diffDays = Math.round(diffHours / 24);
   if (diffDays === 1) return "Yesterday";
   return `${diffDays} days ago`;
-}
-
-function formatCivicStatusLabel(
-  status: string,
-  breachDays: number | null,
-): string | undefined {
-  if (breachDays != null && breachDays > 0)
-    return `${breachDays} days past deadline`;
-  return status || undefined;
-}
-
-function getCivicAuthorInitial(reporterName: string): string {
-  return reporterName ? reporterName[0].toUpperCase() : "";
-}
-
-function getCivicCardState(status: string): CardState {
-  if (status === "Resolved") return "settled";
-  if (status === "Reported") return "pending";
-  return "live";
-}
-
-function formatCivicCategoryValue(
-  daysElapsed: number | null,
-  statutoryWindowDays: number,
-): string {
-  return daysElapsed != null
-    ? `Day ${daysElapsed} of a ${statutoryWindowDays} day window`
-    : `${statutoryWindowDays} day window`;
-}
-
-function formatCivicCategoryDetail(
-  authorityReference: string,
-  statutoryWindowDays: number,
-): string {
-  return `${authorityReference} • the rule is ${statutoryWindowDays} working days`;
-}
-
-function formatCivicDistanceLabel(distance: string | null): string | undefined {
-  return distance ? `${distance} away` : undefined;
-}
-
-function formatCivicDaysOpenLabel(daysElapsed: number | null): string | undefined {
-  return daysElapsed != null ? `${daysElapsed} days open` : undefined;
-}
-
-function formatCivicConfirmingLabel(
-  verificationFor: number | null,
-): string | undefined {
-  return verificationFor != null ? `${verificationFor} confirming` : undefined;
 }
 
 function getCivicVoteLabels(
@@ -196,6 +125,15 @@ const recentActivities: ActivityItem[] = [
   .slice(0, 3);
 
 function Home() {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const trimmed = query.trim();
+    if (trimmed) navigate(`/search?q=${encodeURIComponent(trimmed)}`);
+  };
+
   return (
     <div className="pt-16 sm:pt-20">
       <Navbar />
@@ -203,7 +141,13 @@ function Home() {
         <InfoSection />
       </div>
       <div className="mx-auto w-full max-w-3xl p-3">
-        <SearchBar placeholder=" Search pins, streets, deals..." />
+        <form onSubmit={handleSearchSubmit}>
+          <SearchBar
+            placeholder=" Search pins, streets, deals..."
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+        </form>
       </div>
       <div className="mx-auto flex w-full max-w-3xl flex-col p-3 border-t pt-4 border-gray-300 sm:p-5 lg:max-w-5xl">
         <h1 className="mb-2 px-1 font-medium">Watch · Activity nearby</h1>

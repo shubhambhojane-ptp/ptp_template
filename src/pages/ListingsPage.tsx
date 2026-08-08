@@ -1,11 +1,7 @@
 import { Link } from "react-router";
 import Navbar from "../components/Navbar";
-import ListingCard from "../components/ListingCard";
-import {
-  listingData,
-  formatListingPriceLabel,
-  formatWatchersLabel,
-} from "../../utils/listings";
+import ListingList from "../components/ListingList";
+import { listingData } from "../../utils/listings";
 
 function ListingsPage() {
   return (
@@ -16,20 +12,7 @@ function ListingsPage() {
           {`<`} back
         </Link>
         <h1 className="mt-2 mb-4 font-medium">Listings nearby</h1>
-        <div className="flex flex-col gap-3 sm:gap-4">
-          {listingData.map((listing) => (
-            <ListingCard
-              key={listing[0]}
-              imageUrl={listing[6] ?? undefined}
-              itemName={listing[2]}
-              priceLabel={formatListingPriceLabel(listing[3], listing[4])}
-              metaOne={listing[5]}
-              metaTwo={listing[10]}
-              metaThree={formatWatchersLabel(listing[18])}
-              layout="vertical"
-            />
-          ))}
-        </div>
+        <ListingList listings={listingData} />
       </div>
     </div>
   );

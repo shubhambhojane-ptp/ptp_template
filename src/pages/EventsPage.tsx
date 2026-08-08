@@ -1,12 +1,7 @@
 import { Link } from "react-router";
 import Navbar from "../components/Navbar";
-import EventCard from "../components/EventCard";
-import {
-  eventData,
-  formatEventDateLabel,
-  formatSeatsLabel,
-  formatGoingLabel,
-} from "../../utils/events";
+import EventList from "../components/EventList";
+import { eventData } from "../../utils/events";
 
 function EventsPage() {
   return (
@@ -17,21 +12,7 @@ function EventsPage() {
           {`<`} back
         </Link>
         <h1 className="mt-2 mb-4 font-medium">Events nearby</h1>
-        <div className="flex flex-col gap-3 sm:gap-4">
-          {eventData.map((event) => (
-            <EventCard
-              key={event[0]}
-              imageUrl={event[4] ?? undefined}
-              timingLabel={event[15] ?? undefined}
-              title={event[3]}
-              dateLabel={formatEventDateLabel(event[5])}
-              metaOne={formatSeatsLabel(event[16])}
-              metaTwo={formatGoingLabel(event[17])}
-              onPrimaryClick={() => console.log("interested:", event[0])}
-              layout="vertical"
-            />
-          ))}
-        </div>
+        <EventList events={eventData} />
       </div>
     </div>
   );
