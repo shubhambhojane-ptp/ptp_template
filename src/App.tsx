@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route } from "react-router";
+import { Routes, Route, useNavigate } from "react-router";
 import Home from "./pages/Home";
 import DealsPage from "./pages/DealsPage";
 import EventsPage from "./pages/EventsPage";
@@ -10,6 +10,7 @@ import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const [activeTab, setActiveTab] = useState<BottomTabKey>("map");
+  const navigate = useNavigate();
 
   return (
     <>
@@ -24,7 +25,10 @@ function App() {
       <BottomTab
         active={activeTab}
         onMapClick={() => setActiveTab("map")}
-        onBrowseClick={() => setActiveTab("browse")}
+        onBrowseClick={() => {
+          setActiveTab("browse");
+          navigate("/search");
+        }}
         onAddClick={() => console.log("add pin")}
       />
     </>

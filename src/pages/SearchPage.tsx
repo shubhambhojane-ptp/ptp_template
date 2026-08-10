@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
@@ -44,6 +44,11 @@ function SearchPage() {
   const query = searchParams.get("q") ?? "";
   const [inputValue, setInputValue] = useState(query);
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -51,15 +56,19 @@ function SearchPage() {
     if (trimmed) navigate(`/search?q=${encodeURIComponent(trimmed)}`);
   };
 
+  // matches: title, street, category
   const civicResults = query
     ? civicData.filter((post) => matches(query, post[3], post[8], post[1]))
     : [];
+  // matches: offerText, businessName, category
   const dealResults = query
     ? dealData.filter((deal) => matches(query, deal[2], deal[10], deal[1]))
     : [];
+  // matches: title, venue, category
   const eventResults = query
     ? eventData.filter((event) => matches(query, event[3], event[2], event[1]))
     : [];
+  // matches: itemName, category
   const listingResults = query
     ? listingData.filter((listing) => matches(query, listing[2], listing[1]))
     : [];
@@ -79,6 +88,7 @@ function SearchPage() {
         </Link>
         <form onSubmit={handleSearchSubmit} className="mt-2 mb-4">
           <SearchBar
+            ref={inputRef}
             placeholder=" Search pins, streets, deals..."
             value={inputValue}
             onChange={(event) => setInputValue(event.target.value)}

@@ -263,7 +263,7 @@ function Home() {
           </Link>
         </div>
         <div className="scrollbar-none flex snap-x snap-mandatory items-start gap-3 overflow-x-auto px-3 pb-1 sm:gap-4 sm:px-5">
-          {dealData.map((deal) => (
+          {dealData.slice(0,3).map((deal) => (
             <DealCard
               key={deal[0]}
               imageUrl={deal[3] ?? undefined}
