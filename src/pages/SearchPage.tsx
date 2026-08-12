@@ -89,6 +89,7 @@ function SearchPage() {
         <form onSubmit={handleSearchSubmit} className="mt-2 mb-4">
           <SearchBar
             ref={inputRef}
+            id="search-input"
             placeholder=" Search pins, streets, deals..."
             value={inputValue}
             onChange={(event) => setInputValue(event.target.value)}
