@@ -161,7 +161,7 @@ function Home() {
               ? `/listings?highlight=${activity.key}`
               : activity.type === "deal"
                 ? `/deals?highlight=${activity.key}`
-                : undefined;
+                : `/civic?highlight=${activity.key}`;
 
           return (
             <Activity
@@ -217,7 +217,12 @@ function Home() {
         </div>
       </div>
       <div className="mx-auto grid w-full max-w-3xl grid-cols-1 items-start gap-4 p-3 border-t border-gray-300 pt-4 sm:grid-cols-2 sm:gap-5 sm:p-5 lg:max-w-5xl md:grid-cols-2 lg:grid-cols-3">
-        <h1 className="col-span-full font-medium ">Around You</h1>
+        <div className="col-span-full flex justify-between">
+          <h1 className="font-medium">Around You</h1>
+          <Link to="/civic" className="text-gray-400 hover:text-gray-600">
+            browse {`>`}
+          </Link>
+        </div>
         {civicData.slice(0,5).map((post) => (
           <Card
             key={post[0]}

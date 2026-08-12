@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import DealsPage from "./pages/DealsPage";
 import EventsPage from "./pages/EventsPage";
 import ListingsPage from "./pages/ListingsPage";
+import CivicPage from "./pages/CivicPage";
 import SearchPage from "./pages/SearchPage";
 import BottomTab, { type BottomTabKey } from "./components/BottomTab";
 import ScrollToTop from "./components/ScrollToTop";
@@ -20,6 +21,7 @@ function App() {
         <Route path="/deals" element={<DealsPage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/listings" element={<ListingsPage />} />
+        <Route path="/civic" element={<CivicPage />} />
         <Route path="/search" element={<SearchPage />} />
       </Routes>
       <BottomTab
