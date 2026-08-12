@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { flushSync } from "react-dom";
 import { Routes, Route, useNavigate } from "react-router";
 import Home from "./pages/Home";
 import DealsPage from "./pages/DealsPage";
@@ -27,10 +26,8 @@ function App() {
         active={activeTab}
         onMapClick={() => setActiveTab("map")}
         onBrowseClick={() => {
-          flushSync(() => {
-            setActiveTab("browse");
-            navigate("/search");
-          });
+          setActiveTab("browse");
+          navigate("/search", { flushSync: true });
           document.getElementById("search-input")?.focus();
         }}
         onAddClick={() => console.log("add pin")}
