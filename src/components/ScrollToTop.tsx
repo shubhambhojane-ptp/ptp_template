@@ -7,6 +7,10 @@ function ScrollToTop() {
   // React Router keeps the browser's scroll position on navigation, so without
   // this a route change can land the new page scrolled halfway down.
   useEffect(() => {
+    const active = document.activeElement;
+    if (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement) {
+      return;
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [pathname]);
 
