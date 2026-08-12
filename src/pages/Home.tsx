@@ -86,6 +86,7 @@ function getCivicVoteLabels(
 
 interface ActivityItem {
   key: string;
+  type: "civic" | "listing" | "deal";
   actionLabel: string;
   category: string;
   location: string;
@@ -96,6 +97,7 @@ interface ActivityItem {
 const recentActivities: ActivityItem[] = [
   ...civicData.map((post) => ({
     key: post[0],
+    type: "civic" as const,
     actionLabel: "Pin raised",
     category: post[2],
     location: post[8],
@@ -104,6 +106,7 @@ const recentActivities: ActivityItem[] = [
   })),
   ...listingData.map((listing) => ({
     key: listing[0],
+    type: "listing" as const,
     actionLabel: "Item listed",
     category: listing[2],
     location: listing[10],
@@ -111,6 +114,7 @@ const recentActivities: ActivityItem[] = [
   })),
   ...dealData.map((deal) => ({
     key: deal[0],
+    type: "deal" as const,
     actionLabel: "Deal live",
     category: deal[2],
     location: deal[11],
@@ -151,16 +155,27 @@ function Home() {
       </div>
       <div className="mx-auto flex w-full max-w-3xl flex-col p-3 border-t pt-4 border-gray-300 sm:p-5 lg:max-w-5xl">
         <h1 className="mb-2 px-1 font-medium">Watch · Activity nearby</h1>
-        {recentActivities.map((activity) => (
-          <Activity
-            key={activity.key}
-            actionLabel={activity.actionLabel}
-            category={activity.category}
-            location={activity.location}
-            distance={activity.distance}
-            timeAgo={formatRelativeTime(activity.createdAt)}
-          />
-        ))}
+        {recentActivities.map((activity) => {
+          const activityHref =
+            activity.type === "listing"
+              ? `/listings?highlight=${activity.key}`
+              : activity.type === "deal"
+                ? `/deals?highlight=${activity.key}`
+                : undefined;
+
+          return (
+            <Activity
+              key={activity.key}
+              actionLabel={activity.actionLabel}
+              category={activity.category}
+              location={activity.location}
+              distance={activity.distance}
+              timeAgo={formatRelativeTime(activity.createdAt)}
+              className={activityHref ? "cursor-pointer hover:bg-gray-50" : undefined}
+              onClick={activityHref ? () => navigate(activityHref) : undefined}
+            />
+          );
+        })}
       </div>
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 p-3 border-t pt-4 border-gray-300 sm:gap-4 sm:p-5 lg:max-w-5xl">
         <h1 className="font-medium px-1">Around the street</h1>

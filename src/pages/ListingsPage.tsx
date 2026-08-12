@@ -1,9 +1,20 @@
-import { Link } from "react-router";
+import { useEffect } from "react";
+import { Link, useSearchParams } from "react-router";
 import Navbar from "../components/Navbar";
 import ListingList from "../components/ListingList";
 import { listingData } from "../../utils/listings";
 
 function ListingsPage() {
+  const [searchParams] = useSearchParams();
+  const highlightId = searchParams.get("highlight");
+
+  useEffect(() => {
+    if (!highlightId) return;
+    document
+      .getElementById(`listing-${highlightId}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [highlightId]);
+
   return (
     <div className="pt-16 pb-24 sm:pt-20 sm:pb-28">
       <Navbar />
@@ -12,7 +23,7 @@ function ListingsPage() {
           {`<`} back
         </Link>
         <h1 className="mt-2 mb-4 font-medium">Listings nearby</h1>
-        <ListingList listings={listingData} />
+        <ListingList listings={listingData} highlightId={highlightId} />
       </div>
     </div>
   );
