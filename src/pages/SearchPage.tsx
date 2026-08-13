@@ -60,17 +60,17 @@ function SearchPage() {
   const civicResults = query
     ? civicData.filter((post) => matches(query, post[3], post[8], post[1]))
     : [];
-  // matches: offerText, businessName, category
+  // matches: offerText, businessName, category, street
   const dealResults = query
-    ? dealData.filter((deal) => matches(query, deal[2], deal[10], deal[1]))
+    ? dealData.filter((deal) => matches(query, deal[2], deal[10], deal[1], deal[11]))
     : [];
-  // matches: title, venue, category
+  // matches: title, venue, category, street
   const eventResults = query
-    ? eventData.filter((event) => matches(query, event[3], event[2], event[1]))
+    ? eventData.filter((event) => matches(query, event[3], event[2], event[1], event[10]))
     : [];
-  // matches: itemName, category
+  // matches: itemName, category, street
   const listingResults = query
-    ? listingData.filter((listing) => matches(query, listing[2], listing[1]))
+    ? listingData.filter((listing) => matches(query, listing[2], listing[1], listing[10]))
     : [];
 
   const hasResults =
