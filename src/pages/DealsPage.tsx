@@ -3,10 +3,28 @@ import { Link, useSearchParams } from "react-router";
 import Navbar from "../components/Navbar";
 import DealList from "../components/DealList";
 import { dealData } from "../../utils/deals";
+import useInfiniteList from "../hooks/useInfiniteList";
+
+const PAGE_SIZE = 3;
 
 function DealsPage() {
   const [searchParams] = useSearchParams();
   const highlightId = searchParams.get("highlight");
+
+  // If we came here from an Activity click (?highlight=<id>), the target card
+  // must already be rendered for the scrollIntoView effect below to find it —
+  // so the first batch has to reach past that card's index, not just PAGE_SIZE.
+  const highlightIndex = highlightId
+    ? dealData.findIndex((deal) => deal[0] === highlightId)
+    : -1;
+  const initialCount =
+    highlightIndex >= 0 ? highlightIndex + 1 + PAGE_SIZE : PAGE_SIZE;
+
+  const { visibleItems, hasMore, isLoadingMore, sentinelRef } = useInfiniteList(
+    dealData,
+    PAGE_SIZE,
+    initialCount,
+  );
 
   useEffect(() => {
     if (!highlightId) return;
@@ -23,7 +41,13 @@ function DealsPage() {
           {`<`} back
         </Link>
         <h1 className="mt-2 mb-4 font-medium">Deals nearby</h1>
-        <DealList deals={dealData} highlightId={highlightId} />
+        <DealList deals={visibleItems} highlightId={highlightId} />
+        {/* Scrolling this row into view triggers the next batch (see useInfiniteList) */}
+        {hasMore && (
+          <div ref={sentinelRef} className="py-4 text-center text-sm text-gray-400">
+            {isLoadingMore && "Loading more..."}
+          </div>
+        )}
       </div>
     </div>
   );
