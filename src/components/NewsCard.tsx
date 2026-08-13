@@ -8,7 +8,7 @@ interface NewsCardProps extends React.HTMLAttributes<HTMLDivElement> {
   metaOne?: string | null
   metaTwo?: string | null
   metaThree?: string | null
-  upvoteCount: number | string
+  upvoteCount?: number | string
   onUpvoteClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
@@ -43,13 +43,15 @@ const NewsCard = ({
       </div>
 
       {/* white upvote button with check icon and count */}
-      <Button
-        icon={<img src={checkIcon} className="h-3.5 w-3.5 " alt="" />}
-        className="shrink-0 gap-1.5 rounded-xl border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-900 hover:bg-gray-50"
-        onClick={onUpvoteClick}
-      >
-        {upvoteCount}
-      </Button>
+      {upvoteCount !== undefined && (
+        <Button
+          icon={<img src={checkIcon} className="h-3.5 w-3.5 " alt="" />}
+          className="shrink-0 gap-1.5 rounded-xl border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-900 hover:bg-gray-50"
+          onClick={onUpvoteClick}
+        >
+          {upvoteCount}
+        </Button>
+      )}
     </div>
   )
 }

@@ -37,6 +37,9 @@ import {
   formatCivicDaysOpenLabel,
   formatCivicConfirmingLabel,
 } from "../../utils/civic";
+import { askData } from "../../utils/ask";
+import { momentData } from "../../utils/moments";
+import { placeData } from "../../utils/place";
 
 const categoryIconByType: Record<string, string> = {
   civic: coneIcon,
@@ -245,6 +248,36 @@ function Home() {
             secondaryLabel="It's fixed"
             onPrimaryClick={() => console.log(post[0], "Still there")}
             onSecondaryClick={() => console.log(post[0], "It's fixed")}
+          />
+        ))}
+      </div>
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 p-3 border-t pt-4 border-gray-300 sm:gap-4 sm:p-5 lg:max-w-5xl">
+        <h1 className="mb-2 px-1 font-medium">Around You</h1>
+        {askData.map((ask) => (
+          <NewsCard
+            key={ask[0]}
+            claim={ask[6]}
+            metaOne={ask[3]}
+            metaTwo={ask[8]}
+            metaThree={ask[14]}
+          />
+        ))}
+        {momentData.map((moment) => (
+          <NewsCard
+            key={moment[0]}
+            claim={moment[3]}
+            metaOne={moment[4]}
+            metaTwo={moment[6]}
+            metaThree={formatRelativeTime(moment[7])}
+          />
+        ))}
+        {placeData.map((place) => (
+          <NewsCard
+            key={place[0]}
+            claim={place[2]}
+            metaOne={place[3]}
+            metaTwo={place[5]}
+            metaThree={place[4]}
           />
         ))}
       </div>

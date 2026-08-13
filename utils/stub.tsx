@@ -786,7 +786,7 @@ export const placeData = [
   ]
 ];
 
-// MomentRow index map: [0]id [1]category [2]photoUrl [3]caption [4]street [5]ward [6]status [7]createdAt [8]updatedAt [9]age [10]fadesAt [11]timeToFade [12]latitude [13]longitude
+// MomentRow index map: [0]id [1]category [2]photoUrl [3]caption [4]street [5]ward [6]status [7]createdAt [8]updatedAt [9]latitude [10]longitude
 
 export const momentData = [
   [
@@ -799,9 +799,6 @@ export const momentData = [
     "Live",
     "2026-08-03 17:30",
     "2026-08-03 17:30",
-    "2 Hours",
-    "2026-08-05 17:30",
-    "46 Hours",
     19.0468,
     72.8194
   ]
